@@ -10,6 +10,6 @@ import Foundation
 // Authenticated state starts as 'unknown' until we know if the user authenticated or not
 enum AuthState {
     case authenticated
-    case unauthorized
+    case unauthenticated
     case unknown
 }

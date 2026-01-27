@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-final class AutAuthManager {
+final class AuthManager {
     var authState: AuthState = .unknown
     var currentUserID: String?
     
@@ -45,7 +45,7 @@ final class AutAuthManager {
         do {
             try await authService.signOut()
             currentUserID = nil
-            authState = .unauthorized
+            authState = .unauthenticated
         } catch {
             print("Sign-out error: \(error)")
         }
@@ -63,7 +63,7 @@ final class AutAuthManager {
         } catch {
             print("Refresh user error: \(error)")
             currentUserID = nil
-            authState = .unauthorized
+            authState = .unauthenticated
         }
     }
 }
