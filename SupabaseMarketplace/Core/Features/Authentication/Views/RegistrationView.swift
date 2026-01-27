@@ -127,7 +127,8 @@ private extension RegistrationView {
         }
     }
     
-    var formIsValid: Bool {
+    
+var formIsValid: Bool {
         return email.isValidEmail() && passwordsMatch && username.count > 1
     }
 }

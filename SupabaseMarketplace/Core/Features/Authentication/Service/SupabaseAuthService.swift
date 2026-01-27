@@ -38,8 +38,24 @@ struct SupabaseAuthService {
     // Sign up new user
     func signUp(email: String, password: String, username: String) async throws -> String {
         let response = try await client.auth.signUp(email: email, password: password)
-        let userID = response.user.id.uuidString
+        let userId = response.user.id.uuidString
         // upload user data to supabase here
-        return userID
+        try await uploadUserData(with: userId, email: email, username: username)
+        return userId
+    }
+    
+    // Upload the user data to Supabase one time for a brand new user
+    private func uploadUserData(with uid: String, email: String, username: String) async throws {
+        let user = User(
+            id: uid,
+            email: email,
+            username: username,
+            createdAt: Date(),
+            totalSales: 0,
+            itemsSold: 0,
+            itemsPurchased: 0
+        )
+        
+        try await client.from("users").insert(user).execute()
     }
 }
